@@ -2,9 +2,9 @@ import logging
 
 from piston import utils
 from piston.emitters import Emitter
+from piston.handler import typemapper
 from django.http import HttpRequest
 from django.http import HttpResponse
-
 
 # Response code helper with some corrections & additions from standard the Piston class it extends
 class rc_factory(utils.rc_factory):
@@ -70,7 +70,7 @@ def success_resp(data=None, message=None):
     return resp_json
 
 def error_resp(message, error_type=None, resp=rc.BAD_REQUEST, status_code=None):
-    logging.warn("Status Code " + str(resp.status_code) + ": " + repr(message))
+    logging.warn("Status Code " + str(resp.status_code) + ", error_type: " + repr(error_type) + ", message: " + repr(message))
     error_json = {}
     if message and error_type:
         (error_type_resp, error_type) = error_type
@@ -110,3 +110,12 @@ def reformat_form_validation_errors(errors):
             pass
     return errors
 
+def apply_json_emitter(value_to_emit, handler=None):
+    emitter, ct = Emitter.get('json')  #TODO: Make this work for other emitter formats
+    handler_fields = None
+    if handler:
+        handler_fields = handler.fields
+    srl = emitter(value_to_emit, typemapper, handler, handler_fields, None)
+    json = srl.construct()
+
+    return json

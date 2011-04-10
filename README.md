@@ -7,7 +7,7 @@ django-piston-extended-utils is a set of helper functions that extend the django
 * success_resp - generate json response with optional data and message (status_code = 200)
 * error_resp - generate json response with optional error type and message
 * reformat_form_validation_errors - flatten django form error values to allow them to be emitted properly
-
+* apply_json_emitter - apply emitter right away in the same way as would normally happen on return from piston handler (to json only for now)
 
 # Supported Response Codes
 
