@@ -5,9 +5,10 @@ django-piston-extended-utils is a set of helper functions that extend the django
 * rc_factory (rc) - just like the original with a few more options
 * error_type_factory (ec) - error types with related response code (all rc.BAD_REQUEST for now)
 * success_resp - generate json response with optional data and message (status_code = 200)
-* error_resp - generate json response with optional error type and message
+* error_resp - generate json response with optional error type and message. can specify response type or status_code.
 * reformat_form_validation_errors - flatten django form error values to allow them to be emitted properly
 * apply_json_emitter - apply emitter right away in the same way as would normally happen on return from piston handler (to json only for now)
+* clean_bool_input - converts string into boolean (only 'true' = True)
 
 # Supported Response Codes
 
@@ -21,6 +22,7 @@ A few more than the original.
     UNAUTHORIZED = ('Unauthorized', 401)
     FORBIDDEN = ('Forbidden', 403)
     NOT_FOUND = ('Not Found', 404)
+    REQUEST_TIMEOUT = ('Request Timeout', 408),
     DUPLICATE_ENTRY = ('Conflict/Duplicate', 409)
     NOT_HERE = ('Gone', 410)
     INTERNAL_SERVER_ERROR = ('Internal Server Error', 500)
@@ -36,7 +38,7 @@ These error types help explain why a request was bad.  Modeled after that Facebo
     FB_AUTH_EXCEPTION = (rc.BAD_REQUEST, "FBAuthException")
     DIRECT_AUTH_EXCEPTION = (rc.BAD_REQUEST, "DirectAuthException")
     PARAMETER_VALIDATION_EXCEPTION = (rc.BAD_REQUEST, "ParameterValidationException")
-    BAD_REQUEST_EXCEPTION = (rc.BAD_REQUEST, "BadRequestException")
+    BAD_REQUEST_EXCEPTION = (rc.BAD_REQUEST, "BadRequestException
 
 
 # Dependencies: 
